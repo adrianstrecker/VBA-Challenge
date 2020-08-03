@@ -19,6 +19,7 @@ Dim symbol As String
 Dim yrchange, percentChange, openPrice, closePrice As Double
 'Initialize tickertotal to 0
  tickertotal = 0
+ openPrice = ws.Cells(2, 3).Value
 'create summary table
 
 For i = 2 To ws.Cells(Rows.Count, 1).End(xlUp).Row
@@ -27,11 +28,11 @@ For i = 2 To ws.Cells(Rows.Count, 1).End(xlUp).Row
     If ws.Cells(i + 1, 1).Value <> ws.Cells(i, 1).Value Then
     symbol = ws.Cells(i, 1).Value
     tickertotal = tickertotal + ws.Cells(i, 7).Value
-    yrchange = ws.Cells(i, 6) - ws.Cells(i - 260, 3)
-        If ws.Cells(i, 3) = 0 Then
+    yrchange = ws.Cells(i, 6) - openPrice
+        If openPrice = 0 Then
          percentChange = 0
         Else
-         percentChange = yrchange / ws.Cells(i, 3)
+         percentChange = yrchange / openPrice
         End If
         'Color Conditional formatting
       
@@ -39,10 +40,11 @@ For i = 2 To ws.Cells(Rows.Count, 1).End(xlUp).Row
       ws.Range("L" & summaryRow).Value = tickertotal
       ws.Range("J" & summaryRow).Value = yrchange
       ws.Range("K" & summaryRow).Value = percentChange
-
+        'reset tickertotal
          tickertotal = 0
-
+    'incrementing summaryRow & openPrice
      summaryRow = summaryRow + 1
+     openPrice = ws.Cells(i + 1, 3).Value
     
     Else
          yrchange = ws.Cells(i, 6) - ws.Cells(i, 3)
