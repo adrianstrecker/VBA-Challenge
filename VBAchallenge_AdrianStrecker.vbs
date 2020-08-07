@@ -47,7 +47,7 @@ For i = 2 To ws.Cells(Rows.Count, 1).End(xlUp).Row
      openPrice = ws.Cells(i + 1, 3).Value
     
     Else
-         yrchange = ws.Cells(i, 6) - ws.Cells(i, 3)
+         yrchange = ws.Cells(i, 6) - openPrice
         tickertotal = tickertotal + Cells(i, 7).Value
     
           If ws.Cells(i, 10).Value < 0 Then
